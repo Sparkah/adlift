@@ -81,6 +81,16 @@ labels the active stack in the UI.
 - **Game cover (real data)** - my real CrazyGames cover, 128K impressions at 0.5% CTR. The credible, real-numbers case.
 - **AI chat ad (LLM-native)** - the creative is a **sponsored answer card inside an AI chat reply** (ChatGPT-style placement). The on-theme, conversational case. AdLift generates / rotates / safety-gates / A/B-tests that card.
 
+## The product loop (the "Poll loop" view)
+The headline product is a self-improving creative loop with **real** signal, not a simulation:
+1. AdLift runs a **sponsored poll inside an AI chat** (a native ad unit) with N generated covers.
+2. Real people **vote** - the winner is chosen on real human preference.
+3. The winner is set as the **live CrazyGames cover**; we read the **real CTR**.
+4. AdLift **generates 4 new variants** from the winner.
+5. They seed the **next poll**. Loop.
+
+Three views (top nav): **Creative optimiser** (generate -> safety-gate -> rank -> iterate), **Intent auction** (bid x predicted CTR; better creative wins the impression cheaper), and **Poll loop** (the product cycle above).
+
 ## Deploy (live demo URL for judges)
 `render.yaml` is included - on Render: New > Blueprint > connect the GitHub repo.
 Replay mode needs no keys; for Live runs set `CF_ACCOUNT_ID` + `CF_AI_TOKEN` in the
