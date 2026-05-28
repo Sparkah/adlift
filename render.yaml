@@ -1,0 +1,21 @@
+# Render blueprint for AdLift. Deploy: New > Blueprint > connect the GitHub repo.
+# Replay demo works with NO keys. For Live runs, set CF_ACCOUNT_ID + CF_AI_TOKEN
+# in the Render dashboard (Environment) - they are sync:false so they are never
+# committed. Free plan cold-starts after idle (~30s) - hit the URL before judging.
+services:
+  - type: web
+    name: adlift
+    runtime: node
+    plan: free
+    buildCommand: ""
+    startCommand: node server.js
+    autoDeploy: true
+    envVars:
+      - key: CF_ACCOUNT_ID
+        sync: false
+      - key: CF_AI_TOKEN
+        sync: false
+      - key: TAVILY_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
