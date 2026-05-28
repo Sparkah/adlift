@@ -458,3 +458,79 @@ function toast(msg) {
   const t = $("#toast"); t.textContent = msg; t.classList.remove("hidden");
   clearTimeout(toastT); toastT = setTimeout(() => t.classList.add("hidden"), 3500);
 }
+
+// ---------- intent auction (answers the judge: bid x pCTR, creative is a bid discount) ----------
+const AUCTION_DEFAULT = () => ({
+  ads: [
+    { id: "acme", name: "Acme Buds Pro", you: true, head: "Silence the commute", bid: 2.0, pctr: 0.021 },
+    { id: "rival", name: "RivalBuds", head: "Big bass, tiny price", bid: 3.5, pctr: 0.011 },
+    { id: "gym", name: "GymAudio", head: "Sweatproof sound", bid: 2.8, pctr: 0.014 },
+  ],
+});
+let AUC = AUCTION_DEFAULT();
+let aucBuilt = false, aucRefs = [];
+const ecpm = (a) => a.bid * a.pctr * 1000; // £ per 1,000 impressions
+
+function buildAuctionRows() {
+  const rows = $("#auctionRows"); rows.innerHTML = ""; aucRefs = [];
+  for (const a of AUC.ads) {
+    const row = el("div", "arow");
+    row.innerHTML = `
+      <div class="ad-id"><span class="ad-name">${esc(a.name)}${a.you ? ' <span class="you">YOU</span>' : ""}</span><span class="ad-head">"<span class="hd"></span>"</span></div>
+      <div class="ad-bid"><input type="range" min="1" max="6" step="0.1" value="${a.bid}"><span class="bidval"></span></div>
+      <div class="ad-pctr">pCTR <b></b></div>
+      <div class="ad-ecpm"><div class="ecpm-bar"><div class="ecpm-fill"></div></div><span class="ecpm-val"></span></div>
+      <div class="ad-win"></div>`;
+    const slider = row.querySelector("input[type=range]");
+    slider.oninput = () => { a.bid = parseFloat(slider.value); updateAuction(); };
+    rows.appendChild(row);
+    aucRefs.push({ a, row, fill: row.querySelector(".ecpm-fill"), ev: row.querySelector(".ecpm-val"), pctr: row.querySelector(".ad-pctr b"), bidv: row.querySelector(".bidval"), win: row.querySelector(".ad-win"), hd: row.querySelector(".hd") });
+  }
+  aucBuilt = true;
+}
+
+function updateAuction(improved) {
+  const max = Math.max(...AUC.ads.map(ecpm)) * 1.05;
+  const winId = AUC.ads.reduce((w, a) => (ecpm(a) > ecpm(w) ? a : w), AUC.ads[0]).id;
+  for (const r of aucRefs) {
+    const e = ecpm(r.a);
+    r.fill.style.width = Math.min(100, (e / max) * 100) + "%";
+    r.ev.textContent = "£" + e.toFixed(0);
+    r.pctr.textContent = (r.a.pctr * 100).toFixed(1) + "%";
+    r.bidv.textContent = "£" + r.a.bid.toFixed(2);
+    r.hd.textContent = r.a.head;
+    r.row.classList.toggle("winner", r.a.id === winId);
+    r.win.textContent = r.a.id === winId ? "WINS" : "—";
+  }
+  const acme = AUC.ads.find((a) => a.you);
+  const ins = $("#auctionInsight");
+  if (winId === "acme") {
+    const beat = AUC.ads.filter((a) => !a.you && a.bid > acme.bid).map((a) => a.bid);
+    ins.innerHTML = improved
+      ? `AdLift lifted your pCTR, so you now <b>win the impression at £${acme.bid.toFixed(2)}</b>${beat.length ? ` - beating bids up to £${Math.max(...beat).toFixed(2)}` : ""}. <b>Better creative is a discount on your cost-per-click.</b>`
+      : `You <b>win at £${acme.bid.toFixed(2)}</b>${beat.length ? ` even though RivalBuds bids £${Math.max(...beat).toFixed(2)}` : ""} - because your <b>pCTR is highest</b>. The auction rewards creative quality, not just spend.`;
+  } else {
+    const w = AUC.ads.find((a) => a.id === winId);
+    ins.innerHTML = `<b>${esc(w.name)} wins</b> the impression - higher bid x pCTR. Raise your bid, or <b>improve your creative with AdLift</b> to lift pCTR and win it cheaper.`;
+  }
+}
+
+function renderAuction() { if (!aucBuilt) buildAuctionRows(); updateAuction(); }
+
+$("#auctionImprove").onclick = () => {
+  const acme = AUC.ads.find((a) => a.you);
+  if (acme.pctr >= 0.039) { toast("Creative already optimised - try the bid sliders."); return; }
+  acme.head = "Hear every footstep";
+  acme.pctr = Math.min(0.04, acme.pctr + 0.013);
+  updateAuction(true);
+};
+$("#auctionReset").onclick = () => { AUC = AUCTION_DEFAULT(); buildAuctionRows(); updateAuction(); };
+
+$("#viewnav").addEventListener("click", (e) => {
+  const b = e.target.closest("button"); if (!b) return;
+  const v = b.dataset.view;
+  for (const x of document.querySelectorAll("#viewnav button")) x.classList.toggle("active", x === b);
+  $("#view-optimiser").classList.toggle("hidden", v !== "optimiser");
+  $("#view-auction").classList.toggle("hidden", v !== "auction");
+  if (v === "auction") renderAuction();
+});

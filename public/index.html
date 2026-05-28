@@ -12,6 +12,10 @@
     <span class="logo">Ad<span class="lift">Lift</span></span>
     <span class="tag">autonomous ad-creative CTR optimiser</span>
   </div>
+  <nav class="viewnav" id="viewnav">
+    <button data-view="optimiser" class="active">Creative optimiser</button>
+    <button data-view="auction">Intent auction</button>
+  </nav>
   <div class="status">
     <span id="provider" class="chip" title="active providers">booting...</span>
     <div class="mode" id="mode">
@@ -22,6 +26,7 @@
 </header>
 
 <main>
+  <div id="view-optimiser">
   <section class="campaign card">
     <div id="campaignSwitch" class="camp-switch"></div>
     <div class="campaign-grid">
@@ -70,6 +75,24 @@
       <div class="section-head"><h2>Agent activity</h2></div>
       <div id="log" class="log"></div>
     </aside>
+  </div>
+  </div><!-- /#view-optimiser -->
+
+  <div id="view-auction" class="hidden">
+    <section class="card auction-wrap">
+      <div class="section-head">
+        <h2>Intent auction</h2>
+        <span class="muted">who wins this impression - and why</span>
+      </div>
+      <div class="auction-intent">User intent (from the chat prompt): <strong id="auctionIntent">"best wireless earbuds under 100"</strong></div>
+      <p class="auction-explain">An AI-chat ad slot opens. Advertisers compete. The auction ranks by <b>bid &times; predicted CTR</b> (eCPM) - not bid alone. So a better creative can win the impression at a <b>lower</b> bid.</p>
+      <div id="auctionRows" class="auction-rows"></div>
+      <div class="auction-foot">
+        <button id="auctionImprove" class="cta-btn">Improve your creative with AdLift</button>
+        <button id="auctionReset" class="ghost-btn">Reset</button>
+      </div>
+      <p id="auctionInsight" class="auction-insight"></p>
+    </section>
   </div>
 </main>
 
