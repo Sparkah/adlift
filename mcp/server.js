@@ -5,9 +5,9 @@ import express from "express";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { z } from "zod";
-import { runOptimise } from "../lib/agent.js";
-import { llmJSON } from "../lib/providers.js";
-import { safetyPrompt, ctrPrompt } from "../lib/prompts.js";
+import { runOptimise } from "./lib/agent.js";
+import { llmJSON } from "./lib/providers.js";
+import { safetyPrompt, ctrPrompt } from "./lib/prompts.js";
 
 const SUPERLATIVES = /(#\s?1|\bno\.?\s?1\b|\bbest\b|\bguarantee[d]?\b|\bcheapest\b|\bfastest\b|\bultimate\b|world'?s\b)/i;
 const clamp = (x, lo, hi) => Math.max(lo, Math.min(hi, x));
