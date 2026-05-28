@@ -15,7 +15,6 @@
   <nav class="viewnav" id="viewnav">
     <button data-view="optimiser" class="active">Creative optimiser</button>
     <button data-view="auction">Intent auction</button>
-    <button data-view="poll">Poll loop</button>
   </nav>
   <div class="status">
     <span id="provider" class="chip" title="active providers">booting...</span>
@@ -93,42 +92,6 @@
         <button id="auctionReset" class="ghost-btn">Reset</button>
       </div>
       <p id="auctionInsight" class="auction-insight"></p>
-    </section>
-  </div>
-
-  <div id="view-poll" class="hidden">
-    <section class="card poll-wrap">
-      <div class="section-head">
-        <h2>The loop: sponsored poll &rarr; live cover &rarr; CTR &rarr; regenerate</h2>
-        <span class="muted">real human preference + real CTR - not a simulated A/B</span>
-      </div>
-      <div class="poll-stage">
-        <div class="poll-chat">
-          <div class="cm-user">recommend me a fun browser game</div>
-          <div class="cm-bot">Sure - and a 1-tap poll for the community:</div>
-          <div class="poll-unit">
-            <div class="poll-spon">Sponsored poll &middot; chosen by AdLift</div>
-            <div class="poll-q">Which cover makes you want to play <b>Battle Merge</b>?</div>
-            <div id="pollOptions" class="poll-options"></div>
-            <div class="poll-total" id="pollTotal"></div>
-          </div>
-        </div>
-        <div class="poll-side">
-          <ol class="cycle-steps" id="cycleSteps">
-            <li data-step="poll">Users vote in the sponsored poll</li>
-            <li data-step="winner">Winner set as the live CrazyGames cover</li>
-            <li data-step="ctr">Read the real CrazyGames CTR</li>
-            <li data-step="regen">AdLift generates 4 new variants</li>
-            <li data-step="loop">New variants seed the next poll</li>
-          </ol>
-          <div class="poll-ctr" id="pollCtr"></div>
-          <div class="poll-foot">
-            <button id="pollRun" class="cta-btn">Run the cycle</button>
-            <button id="pollReset" class="ghost-btn">Reset</button>
-          </div>
-        </div>
-      </div>
-      <p id="pollInsight" class="auction-insight"></p>
     </section>
   </div>
 </main>

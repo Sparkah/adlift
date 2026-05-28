@@ -98,14 +98,6 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     await cap("Improve the creative - pCTR jumps - you win it back, <b>cheaper</b>."); await sleep(3600);
     await cap("<b>Better creative is a discount on your bid.</b>"); await sleep(3000);
 
-    // 8.6 the poll loop (THE PRODUCT)
-    await click('#viewnav button[data-view="poll"]'); await sleep(900); await top();
-    await cap("The product loop: a <b>sponsored poll in chat</b> crowdsources which cover wins."); await sleep(3400);
-    await click("#pollRun"); await sleep(2600);
-    await cap("Real people vote - <b>real preference</b>, not a simulated number."); await sleep(3000);
-    await cap("Winner goes <b>live on CrazyGames</b>; we read the <b>real CTR</b> - 0.5% to ~3%."); await sleep(3500);
-    await cap("AdLift regenerates 4 from the winner, <b>seeding the next poll</b>. A self-improving loop."); await sleep(3900);
-
     // 8.7 overmind supervision
     await click('#viewnav button[data-view="optimiser"]'); await sleep(600); await to("#log");
     await cap("Every agent decision - research, generate, safety, score - is <b>traced to Overmind</b>."); await sleep(3600);

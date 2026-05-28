@@ -67,13 +67,6 @@ Live links to put in the YouTube description:
 - **Caption:** "Better creative is a discount on your bid."
 - **VO:** "And when several advertisers compete for that slot, the auction ranks by bid times predicted CTR. So a rival can outbid you - but improve the creative and your pCTR wins the impression back at a lower bid. AdLift's creative layer plugs straight into the bidding layer: better creative is a discount on your cost-per-click."
 
-### 8.6 The poll loop - THE PRODUCT (16s) - switch to the "Poll loop" view, hit "Run the cycle"
-- **Caption:** "The product loop: a sponsored poll in chat crowdsources which cover wins."
-- **Caption:** "Real people vote - real preference, not a simulated number."
-- **Caption:** "Winner goes live on CrazyGames; we read the real CTR - 0.5% to ~3%."
-- **Caption:** "AdLift regenerates 4 from the winner, seeding the next poll. A self-improving loop."
-- **VO:** "Here's the actual product. AdLift runs a sponsored poll inside an AI chat - a native ad unit - and real people vote on the cover. The winner goes live on CrazyGames, we read the real click-through, AdLift generates four fresh variants from the winner, and those seed the next poll. A self-improving creative loop driven by real human preference and real CTR - no simulation."
-
 ### 8.7 Overmind supervision (7s) - back to the optimiser view, agent-activity log
 - **Caption:** "Every agent decision - research, generate, safety, score - is traced to Overmind."
 - **Caption:** "Supervision for the agent: observe every call, then auto-optimise its prompts."
