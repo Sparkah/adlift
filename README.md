@@ -12,6 +12,11 @@ required before anything publishes.
 > impressions at **0.5% CTR**. AdLift lifts it to **~4%** autonomously, with a
 > human gate, in ~90 seconds.
 
+## Live
+- **Demo (dashboard):** https://sparkah.github.io/adlift/ - the full visual loop in replay mode (game-cover + AI-chat presets, switcher top-left).
+- **MCP server (Alpic):** https://adlift-mcp-961141fd.alpic.live/mcp - agent-callable tools (`optimise_creative`, `check_brand_safety`, `predict_ctr`); playground at `/try`.
+- **Source:** https://github.com/Sparkah/adlift
+
 ---
 
 ## The problem

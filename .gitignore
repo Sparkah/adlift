@@ -3,6 +3,7 @@
 node_modules/
 dist/
 static/
+.alpic/
 data/runs/
 *.log
 .DS_Store
