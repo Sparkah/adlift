@@ -6,19 +6,28 @@ const fmtN = (n) => n >= 1000 ? (n / 1000).toFixed(n >= 10000 ? 0 : 1).replace(/
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[m]));
-const S = { campaigns: [], campaign: null, mode: "replay", cards: new Map(), run: null, running: false };
+const S = { campaigns: [], campaign: null, mode: "replay", cards: new Map(), run: null, running: false, static: false };
+// on a static host (no server API) data is served as files and paths must be relative
+const assetURL = (p) => (S.static && typeof p === "string" ? p.replace(/^\//, "") : p);
 
 // ---------- boot ----------
 (async function boot() {
-  let status = {};
-  try { status = await (await fetch("/api/status")).json(); } catch {}
-  setProvider(status.provider);
-  S.mode = status.hasFixture ? "replay" : "live";
+  let status = null;
+  try { const r = await fetch("api/status"); if (r.ok) status = await r.json(); } catch {}
+  if (!status) { S.static = true; status = { hasFixture: true }; }
+  S.mode = "replay";
+  if (S.static) {
+    $("#provider").textContent = "static replay - live via the MCP endpoint";
+    const liveBtn = document.querySelector('#mode button[data-mode="live"]');
+    if (liveBtn) { liveBtn.disabled = true; liveBtn.style.opacity = ".4"; liveBtn.title = "Live runs locally or via the AdLift MCP endpoint"; }
+  } else {
+    setProvider(status.provider);
+  }
   syncModeButtons();
-  if (!status.hasFixture) toast("No replay fixture yet - running in Live mode.");
 
   try {
-    S.campaigns = await (await fetch("/api/campaigns")).json();
+    const r = await fetch(S.static ? "data/campaigns.json" : "api/campaigns");
+    S.campaigns = await r.json();
     renderSwitch();
     selectCampaign(S.campaigns[0].id);
     $("#optimiseBtn").disabled = false;
@@ -70,7 +79,7 @@ function renderCampaign(c) {
   } else {
     cover.classList.remove("is-chat");
     cover.innerHTML = `<img id="baselineImg" alt="baseline ad" />`;
-    if (c.baseline.image) $("#baselineImg").src = c.baseline.image;
+    if (c.baseline.image) $("#baselineImg").src = assetURL(c.baseline.image);
   }
 
   const list = $("#briefList"); list.innerHTML = "";
@@ -131,7 +140,7 @@ async function runLive() {
 async function runReplay() {
   let run;
   try {
-    const r = await fetch("/api/replay?id=" + encodeURIComponent(S.campaign.id));
+    const r = await fetch(S.static ? `data/fixtures/replay_${S.campaign.id}.json` : "/api/replay?id=" + encodeURIComponent(S.campaign.id));
     if (!r.ok) { toast("No replay fixture for this campaign - switch to Live run."); return; }
     run = await r.json();
   } catch { toast("Replay unavailable."); return; }
@@ -425,20 +434,18 @@ function showReport(r) {
 // ---------- approval ----------
 async function approve(id, decision) {
   const rec = S.cards.get(id); if (!rec) return;
-  try {
-    const r = await fetch("/api/approve", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ variantId: id, decision, headline: rec.data.headline }) });
-    const j = await r.json();
-    const actions = rec.el.querySelector(".vactions");
-    if (decision === "approve") {
-      actions.innerHTML = `<div class="published">PUBLISHED &#10003;</div>`;
-      rec.el.querySelector(".disclosure").style.display = "block";
-      addLog("human", `approved + published "${rec.data.headline}"`, "hi");
-    } else {
-      rec.el.classList.add("blocked");
-      actions.innerHTML = `<div class="published" style="color:var(--block);border-color:var(--block)">REJECTED</div>`;
-      addLog("human", `rejected "${rec.data.headline}"`, "bad");
-    }
-  } catch { toast("Approval failed."); }
+  const actions = rec.el.querySelector(".vactions");
+  if (decision === "approve") {
+    actions.innerHTML = `<div class="published">PUBLISHED &#10003;</div>`;
+    rec.el.querySelector(".disclosure").style.display = "block";
+    addLog("human", `approved + published "${rec.data.headline}"`, "hi");
+  } else {
+    rec.el.classList.add("blocked");
+    actions.innerHTML = `<div class="published" style="color:var(--block);border-color:var(--block)">REJECTED</div>`;
+    addLog("human", `rejected "${rec.data.headline}"`, "bad");
+  }
+  if (S.static) return; // no server to record against
+  try { await fetch("/api/approve", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ variantId: id, decision, headline: rec.data.headline }) }); } catch {}
 }
 
 // ---------- log + toast ----------

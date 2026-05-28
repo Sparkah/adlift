@@ -2,6 +2,7 @@
 .env.local
 node_modules/
 dist/
+static/
 data/runs/
 *.log
 .DS_Store
