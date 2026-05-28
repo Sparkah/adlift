@@ -98,6 +98,11 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     await cap("Improve the creative - pCTR jumps - you win it back, <b>cheaper</b>."); await sleep(3600);
     await cap("<b>Better creative is a discount on your bid.</b>"); await sleep(3000);
 
+    // 8.7 overmind supervision
+    await click('#viewnav button[data-view="optimiser"]'); await sleep(600); await to("#log");
+    await cap("Every agent decision - research, generate, safety, score - is <b>traced to Overmind</b>."); await sleep(3600);
+    await cap("Supervision for the agent: observe every call, then auto-optimise its prompts."); await sleep(3500);
+
     // 9 infra + 10 close
     await cap("AdLift is also a <b>live MCP server</b> - other agents call it for creative."); await sleep(3600);
     await card("This loop already runs in production.", "AdLift - creative is the lever. The agent pulls it. The human signs off.");

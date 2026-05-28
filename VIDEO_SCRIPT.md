@@ -67,6 +67,11 @@ Live links to put in the YouTube description:
 - **Caption:** "Better creative is a discount on your bid."
 - **VO:** "And when several advertisers compete for that slot, the auction ranks by bid times predicted CTR. So a rival can outbid you - but improve the creative and your pCTR wins the impression back at a lower bid. AdLift's creative layer plugs straight into the bidding layer: better creative is a discount on your cost-per-click."
 
+### 8.7 Overmind supervision (7s) - back to the optimiser view, agent-activity log
+- **Caption:** "Every agent decision - research, generate, safety, score - is traced to Overmind."
+- **Caption:** "Supervision for the agent: observe every call, then auto-optimise its prompts."
+- **VO:** "Every decision the agent makes is traced to Overmind, so you can supervise the agent and let Overmind optimise its prompts. AdLift optimises ad creative; Overmind optimises AdLift."
+
 ### 9. Infrastructure / agent-callable (7s)
 - **Caption:** "AdLift is also a live MCP server on Alpic..."
 - **Caption:** "...so other agents call it for creative on demand."
