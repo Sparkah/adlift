@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AdLift - Autonomous CTR Optimiser</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">Ad<span class="lift">Lift</span></span>
+    <span class="tag">autonomous ad-creative CTR optimiser</span>
+  </div>
+  <nav class="viewnav" id="viewnav">
+    <button data-view="optimiser" class="active">Creative optimiser</button>
+    <button data-view="auction">Intent auction</button>
+  </nav>
+  <div class="status">
+    <span id="provider" class="chip" title="active providers">booting...</span>
+    <div class="mode" id="mode">
+      <button data-mode="replay" class="active">Replay demo</button>
+      <button data-mode="live">Live run</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div id="view-optimiser">
+  <section class="campaign card">
+    <div id="campaignSwitch" class="camp-switch"></div>
+    <div class="campaign-grid">
+      <div class="baseline">
+        <h3 class="eyebrow" id="baseEyebrow">The underperforming ad</h3>
+        <div class="cover" id="baseCover"><img id="baselineImg" alt="baseline ad" /></div>
+        <div class="metrics">
+          <div class="metric"><span class="big" id="baseCtr">-</span><span class="lbl">CTR</span></div>
+          <div class="metric"><span class="big" id="baseImpr">-</span><span class="lbl">impressions</span></div>
+          <div class="metric"><span class="big" id="basePlays">-</span><span class="lbl">clicks</span></div>
+        </div>
+        <p id="baseNote" class="note"></p>
+      </div>
+      <div class="brief">
+        <h3 id="prodName" class="prod">-</h3>
+        <p id="prodDesc" class="desc"></p>
+        <ul class="brief-list" id="briefList"></ul>
+        <button id="optimiseBtn" class="cta-btn" disabled>Optimise creative</button>
+        <p class="target">Goal: lift CTR to <strong id="targetCtr">-</strong> &nbsp;|&nbsp; nothing publishes without your approval</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="stage">
+    <section class="variants-wrap">
+      <div class="section-head">
+        <h2>Creative variants</h2>
+        <span id="roundLabel" class="round"></span>
+      </div>
+      <div id="variants" class="variants">
+        <p class="empty">Hit <strong>Optimise creative</strong> to watch the agent generate, safety-gate, score, and A/B-race new ad creatives.</p>
+      </div>
+
+      <div id="abSection" class="ab hidden">
+        <div class="section-head">
+          <h2>Live A/B &mdash; measured CTR</h2>
+          <span class="muted">Thompson sampling over simulated traffic</span>
+        </div>
+        <div id="abBars" class="ab-bars"></div>
+      </div>
+
+      <div id="report" class="report hidden"></div>
+    </section>
+
+    <aside class="agentlog">
+      <div class="section-head"><h2>Agent activity</h2></div>
+      <div id="log" class="log"></div>
+    </aside>
+  </div>
+  </div><!-- /#view-optimiser -->
+
+  <div id="view-auction" class="hidden">
+    <section class="card auction-wrap">
+      <div class="section-head">
+        <h2>Intent auction</h2>
+        <span class="muted">who wins this impression - and why</span>
+      </div>
+      <div class="auction-intent">User intent (from the chat prompt): <strong id="auctionIntent">"best wireless earbuds under 100"</strong></div>
+      <p class="auction-explain">An AI-chat ad slot opens. Advertisers compete. The auction ranks by <b>bid &times; predicted CTR</b> (eCPM) - not bid alone. So a better creative can win the impression at a <b>lower</b> bid.</p>
+      <div id="auctionRows" class="auction-rows"></div>
+      <div class="auction-foot">
+        <button id="auctionImprove" class="cta-btn">Improve your creative with AdLift</button>
+        <button id="auctionReset" class="ghost-btn">Reset</button>
+      </div>
+      <p id="auctionInsight" class="auction-insight"></p>
+    </section>
+  </div>
+</main>
+
+<div id="toast" class="toast hidden"></div>
+<script src="app.js"></script>
+</body>
+</html>
