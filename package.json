@@ -1,0 +1,14 @@
+{
+  "name": "adlift",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "AdLift - autonomous ad-creative CTR optimiser with a brand-safety + human-approval gate.",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
