@@ -1,0 +1,21 @@
+{
+  "id": "acme_buds",
+  "order": 2,
+  "label": "AI chat ad (LLM-native)",
+  "placementKind": "chat",
+  "product": "Acme Buds Pro",
+  "description": "True-wireless earbuds with active noise cancelling and 30-hour battery, aimed at commuters and gamers.",
+  "audience": "people asking an AI assistant for a product recommendation",
+  "tone": "helpful, trustworthy, concise",
+  "placement": "a sponsored answer card rendered inside an AI chat assistant's reply (ChatGPT-style placement)",
+  "query": "what are the best wireless earbuds under 100?",
+  "assistantAnswer": "Good question. Under 100, prioritise active noise cancelling, battery life, and comfort. A strong match:",
+  "rules": "no false or unprovable claims; no unverifiable superlatives like '#1' or 'best'; clearly disclosed as sponsored; family-safe; helpful tone, not pushy",
+  "baseline": {
+    "headline": "Acme Buds Pro - shop now",
+    "ctr": 0.008,
+    "impressions": 50000,
+    "note": "Baseline: a plain text-only sponsored line tacked onto the answer. Low-trust, ignorable, 0.8% CTR. The opportunity: an agent that generates a genuinely useful, on-brand, disclosed sponsored card and optimises it."
+  },
+  "target": 0.045
+}

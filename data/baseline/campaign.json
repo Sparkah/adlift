@@ -1,0 +1,24 @@
+{
+  "id": "battle_merge",
+  "order": 1,
+  "label": "Game cover (real data)",
+  "placementKind": "portal",
+  "product": "Battle Merge",
+  "description": "A casual merge-and-battle game: merge units on a grid, then send them to crush escalating enemy waves. Quick sessions, satisfying upgrades and power-ups.",
+  "audience": "casual mobile and web players who enjoy merge, idle, and tower-defense games",
+  "tone": "playful, bold, energetic, family-safe",
+  "placement": "CrazyGames portal cover card competing in a dense grid of game thumbnails",
+  "rules": "no false claims; no unverifiable superlatives like '#1' or 'best' or 'guaranteed'; family-safe; keep the playful on-brand tone",
+  "baseline": {
+    "headline": "(wordless cover)",
+    "ctr": 0.005,
+    "impressions": 128000,
+    "image": "/data/baseline/battle_merge_before.png",
+    "note": "Real CrazyGames data: 128,000 impressions at 0.5% CTR -> only a few hundred clicks. In-game it scores 9.0/10 with 7m23s avg playtime, so the creative, not the game, is the bottleneck."
+  },
+  "humanRedesign": {
+    "note": "A manual cover redesign (added title, hook, and a clearer character/scene) took days of human iteration. AdLift does this loop autonomously.",
+    "image": "/data/baseline/battle_merge_after.png"
+  },
+  "target": 0.04
+}
